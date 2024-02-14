@@ -51,9 +51,10 @@ const scrapeLogic = async (res) => {
 
 			await page.waitForNavigation({ waitUntil: 'networkidle2' });
 			// test HTML output
-			// pageSource = await page.content();
+			const pageSource = await page.content();
 			// fs.writeFileSync('pageSource.html', pageSource, 'utf8');
 			// console.log('Page source saved to pageSource.html');
+			console.log(pageSource);
 
 			const info = await page.$eval(
 				'div.bui-f-font-display_two.sr-snippet_header_num_properties',

@@ -44,10 +44,10 @@ const scrapeLogic = async (res) => {
 		await searchInput.type('Lviv');
 
 		// Search btn------------------------------------------
-		// await page.evaluate(() => {
-		// 	const btn = document.querySelector('button[type="submit"]');
-		// 	btn.click();
-		// });
+		await page.evaluate(() => {
+			const btn = document.querySelector('button[type="submit"]');
+			btn.click();
+		});
 
 		// await page.waitForNavigation({ waitUntil: 'networkidle2' });
 		// test HTML output ---------------------------------------------

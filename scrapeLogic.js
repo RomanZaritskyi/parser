@@ -25,22 +25,12 @@ const scrapeLogic = async (res) => {
 
 		await page.goto(url);
 
-		// Set screen size
+		// ----------- Set screen size
 		await page.setViewport({ width: 1080, height: 1024 });
-
-		// setTimeout(async () => {
-		// Close popup
-		// const popup = await page.$('div.eb33ef7c47');
-		// if (popup) {
-		// 	const closeBtn = await popup.$(
-		// 		'button[aria-label="Dismiss sign-in info."]'
-		// 	);
-		// 	await closeBtn.click();
-		// }
 
 		// -----------Search input -----------------------------
 		const searchInputSelector = 'input.eb46370fe1';
-		await pabe.type(searchInputSelector, 'Lviv');
+		await page.type(searchInputSelector, 'Lviv');
 
 		// -----------Select dates ---------------------------------------
 		const dateContainerSelector = 'div.f73e6603bf';
@@ -63,6 +53,7 @@ const scrapeLogic = async (res) => {
 		// await page.waitForSelector(submitButtoSelector);
 		// await page.click(submitButtoSelector);
 
+		// --------------Wait for navigation -------------------
 		// await page.waitForNavigation({ waitUntil: 'networkidle2' });
 
 		// --------------Get places-----------------------------------------------
@@ -79,7 +70,6 @@ const scrapeLogic = async (res) => {
 		await browser.close();
 
 		res.send(pageSource);
-		// }, 3000);
 	} catch (e) {
 		console.error(e);
 		res.send(`Something went wrong while running Puppeteer: ${e}`);

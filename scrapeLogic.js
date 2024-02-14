@@ -49,6 +49,10 @@ const scrapeLogic = async (res) => {
 			btn.click();
 		});
 
+		const submitButtoSelector = 'button[type="submit"]';
+		await page.waitForSelector(submitButtoSelector);
+		await page.click(submitButtoSelector);
+
 		// await page.waitForNavigation({ waitUntil: 'networkidle2' });
 		// test HTML output ---------------------------------------------
 		const pageSource = await page.content();

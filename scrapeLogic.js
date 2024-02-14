@@ -1,5 +1,8 @@
 const puppeteer = require('puppeteer');
 require('dotenv').config();
+const fs = require('fs');
+
+const url = 'https://booking.com';
 
 const scrapeLogic = async (res) => {
 	const browser = await puppeteer.launch({
@@ -14,37 +17,55 @@ const scrapeLogic = async (res) => {
 				? process.env.PUPPETEER_EXECUTABLE_PATH
 				: puppeteer.executablePath(),
 	});
+
 	try {
 		const page = await browser.newPage();
 
-		await page.goto('https://developer.chrome.com/');
+		await page.goto(url);
 
 		// Set screen size
 		await page.setViewport({ width: 1080, height: 1024 });
 
-		// Type into search box
-		await page.type('.devsite-search-field', 'automate beyond recorder');
+		setTimeout(async () => {
+			// Close popup
+			const popup = await page.$('div.eb33ef7c47');
+			if (popup) {
+				const closeBtn = await popup.$(
+					'button[aria-label="Dismiss sign-in info."]'
+				);
+				await closeBtn.click();
+			}
 
-		// Wait and click on first result
-		const searchResultSelector = '.devsite-result-item-link';
-		await page.waitForSelector(searchResultSelector);
-		await page.click(searchResultSelector);
+			// Search input
+			const searchInput = await page.$('input[name="ss"]');
+			await searchInput.focus();
+			await searchInput.type('Lviv');
 
-		// Locate the full title with a unique string
-		const textSelector = await page.waitForSelector(
-			'text/Customize and automate'
-		);
-		const fullTitle = await textSelector.evaluate((el) => el.textContent);
+			// Search btn
+			await page.evaluate(() => {
+				const btn = document.querySelector('button[type="submit"]');
+				btn.click();
+			});
 
-		// Print the full title
-		const logStatement = `The title of this blog post is ${fullTitle}`;
-		console.log(logStatement);
-		res.send(logStatement);
+			await page.waitForNavigation({ waitUntil: 'networkidle2' });
+
+			pageSource = await page.content();
+			fs.writeFileSync('pageSource.html', pageSource, 'utf8');
+			console.log('Page source saved to pageSource.html');
+
+			const info = await page.$eval(
+				'div.bui-f-font-display_two.sr-snippet_header_num_properties',
+				(el) => el.textContent
+			);
+			console.log(info);
+
+			await browser.close();
+
+			res.send(info);
+		}, 3000);
 	} catch (e) {
 		console.error(e);
 		res.send(`Something went wrong while running Puppeteer: ${e}`);
-	} finally {
-		await browser.close();
 	}
 };
 

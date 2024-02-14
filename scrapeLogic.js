@@ -43,34 +43,26 @@ const scrapeLogic = async (res) => {
 		await searchInput.focus();
 		await searchInput.type('Lviv');
 
+		// Select dates ---------------------------------------
+
 		// Search btn------------------------------------------
-		// await page.evaluate(() => {
-		// 	const btn = document.querySelector('button[type="submit"]');
-		// 	btn.click();
-		// });
-		const submitButtoSelector =
-			'button.a83ed08757.c21c56c305.a4c1805887.f671049264.d2529514af.c082d89982.cceeb8986b';
-		await page.waitForSelector(submitButtoSelector);
-		await page.click(submitButtoSelector);
+		// const submitButtoSelector =
+		// 	'button.a83ed08757.c21c56c305.a4c1805887.f671049264.d2529514af.c082d89982.cceeb8986b';
+		// await page.waitForSelector(submitButtoSelector);
+		// await page.click(submitButtoSelector);
 
-		await page.waitForNavigation({ waitUntil: 'networkidle2' });
+		// await page.waitForNavigation({ waitUntil: 'networkidle2' });
 
-		// Get places
-		const palcesSelector = await page.waitForSelector('div.ac864a506a');
-		const amounOfPlaces = await palcesSelector?.evaluate(
-			(el) => el.textContent
-		);
+		// Get places-----------------------------------------------
+		// const palcesSelector = await page.waitForSelector('div.ac864a506a');
+		// const amounOfPlaces = await palcesSelector?.evaluate(
+		// 	(el) => el.textContent
+		// );
 
 		// test HTML output ---------------------------------------------
 		// const pageSource = await page.content();
 		// fs.writeFileSync('pageSource.html', pageSource, 'utf8');
 		// console.log('Page source saved to pageSource.html');
-
-		// const info = await page.$eval(
-		// 	'div.bui-f-font-display_two.sr-snippet_header_num_properties',
-		// 	(el) => el.textContent
-		// );
-		// console.log(info);
 
 		await browser.close();
 

@@ -28,43 +28,43 @@ const scrapeLogic = async (res) => {
 		// Set screen size
 		await page.setViewport({ width: 1080, height: 1024 });
 
-		setTimeout(async () => {
-			// Close popup
-			// const popup = await page.$('div.eb33ef7c47');
-			// if (popup) {
-			// 	const closeBtn = await popup.$(
-			// 		'button[aria-label="Dismiss sign-in info."]'
-			// 	);
-			// 	await closeBtn.click();
-			// }
+		// setTimeout(async () => {
+		// Close popup
+		// const popup = await page.$('div.eb33ef7c47');
+		// if (popup) {
+		// 	const closeBtn = await popup.$(
+		// 		'button[aria-label="Dismiss sign-in info."]'
+		// 	);
+		// 	await closeBtn.click();
+		// }
 
-			// Search input -----------------------------
-			// const searchInput = await page.$('input[name="ss"]');
-			// await searchInput.focus();
-			// await searchInput.type('Lviv');
+		// Search input -----------------------------
+		// const searchInput = await page.$('input[name="ss"]');
+		// await searchInput.focus();
+		// await searchInput.type('Lviv');
 
-			// Search btn------------------------------------------
-			// await page.evaluate(() => {
-			// 	const btn = document.querySelector('button[type="submit"]');
-			// 	btn.click();
-			// });
+		// Search btn------------------------------------------
+		// await page.evaluate(() => {
+		// 	const btn = document.querySelector('button[type="submit"]');
+		// 	btn.click();
+		// });
 
-			// await page.waitForNavigation({ waitUntil: 'networkidle2' });
-			// test HTML output ---------------------------------------------
-			const pageSource = await page.content();
-			// fs.writeFileSync('pageSource.html', pageSource, 'utf8');
-			// console.log('Page source saved to pageSource.html');
+		// await page.waitForNavigation({ waitUntil: 'networkidle2' });
+		// test HTML output ---------------------------------------------
+		const pageSource = await page.content();
+		// fs.writeFileSync('pageSource.html', pageSource, 'utf8');
+		// console.log('Page source saved to pageSource.html');
 
-			const info = await page.$eval(
-				'div.bui-f-font-display_two.sr-snippet_header_num_properties',
-				(el) => el.textContent
-			);
-			console.log(info);
+		// const info = await page.$eval(
+		// 	'div.bui-f-font-display_two.sr-snippet_header_num_properties',
+		// 	(el) => el.textContent
+		// );
+		// console.log(info);
 
-			await browser.close();
+		await browser.close();
 
-			res.send(pageSource);
-		}, 3000);
+		res.send(pageSource);
+		// }, 3000);
 	} catch (e) {
 		console.error(e);
 		res.send(`Something went wrong while running Puppeteer: ${e}`);

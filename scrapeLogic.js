@@ -39,9 +39,9 @@ const scrapeLogic = async (res) => {
 		// }
 
 		// Search input -----------------------------
-		// const searchInput = await page.$('input[name="ss"]');
-		// await searchInput.focus();
-		// await searchInput.type('Lviv');
+		const searchInput = await page.$('input.eb46370fe1');
+		await searchInput.focus();
+		await searchInput.type('Lviv');
 
 		// Search btn------------------------------------------
 		// await page.evaluate(() => {

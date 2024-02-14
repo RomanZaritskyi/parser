@@ -4,6 +4,8 @@ const fs = require('fs');
 
 const url = 'https://booking.com';
 
+const cities = ['Paris', 'London', 'Lviv'];
+
 const scrapeLogic = async (res) => {
 	const browser = await puppeteer.launch({
 		args: [
@@ -48,10 +50,10 @@ const scrapeLogic = async (res) => {
 			});
 
 			await page.waitForNavigation({ waitUntil: 'networkidle2' });
-
-			pageSource = await page.content();
-			fs.writeFileSync('pageSource.html', pageSource, 'utf8');
-			console.log('Page source saved to pageSource.html');
+			// test HTML output
+			// pageSource = await page.content();
+			// fs.writeFileSync('pageSource.html', pageSource, 'utf8');
+			// console.log('Page source saved to pageSource.html');
 
 			const info = await page.$eval(
 				'div.bui-f-font-display_two.sr-snippet_header_num_properties',

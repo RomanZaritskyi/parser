@@ -60,13 +60,13 @@ const scrapeLogic = async (res) => {
 		// );
 
 		// test HTML output ---------------------------------------------
-		// const pageSource = await page.content();
+		const pageSource = await page.content();
 		// fs.writeFileSync('pageSource.html', pageSource, 'utf8');
 		// console.log('Page source saved to pageSource.html');
 
 		await browser.close();
 
-		res.send(amounOfPlaces);
+		res.send(pageSource);
 		// }, 3000);
 	} catch (e) {
 		console.error(e);

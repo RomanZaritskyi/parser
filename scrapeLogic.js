@@ -23,7 +23,7 @@ const scrapeLogic = async (res) => {
 	try {
 		const page = await browser.newPage();
 
-		await page.goto(url, { waitUntil: 'networkidle2' });
+		await page.goto(url);
 
 		// Set screen size
 		await page.setViewport({ width: 1080, height: 1024 });

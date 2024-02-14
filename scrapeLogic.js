@@ -44,6 +44,13 @@ const scrapeLogic = async (res) => {
 		await searchInput.type('Lviv');
 
 		// Select dates ---------------------------------------
+		const dateContainerSelector = 'div.f73e6603bf';
+		await page.waitForSelector(dateContainerSelector);
+		await page.click(dateContainerSelector);
+
+		const dateSelector = 'span[data-date="2024-02-16"]';
+		await page.waitForSelector(dateSelector);
+		await page.click(dateSelector);
 
 		// Search btn------------------------------------------
 		// const submitButtoSelector =

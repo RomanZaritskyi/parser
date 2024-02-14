@@ -30,27 +30,27 @@ const scrapeLogic = async (res) => {
 
 		setTimeout(async () => {
 			// Close popup
-			const popup = await page.$('div.eb33ef7c47');
-			if (popup) {
-				const closeBtn = await popup.$(
-					'button[aria-label="Dismiss sign-in info."]'
-				);
-				await closeBtn.click();
-			}
+			// const popup = await page.$('div.eb33ef7c47');
+			// if (popup) {
+			// 	const closeBtn = await popup.$(
+			// 		'button[aria-label="Dismiss sign-in info."]'
+			// 	);
+			// 	await closeBtn.click();
+			// }
 
-			// Search input
-			const searchInput = await page.$('input[name="ss"]');
-			await searchInput.focus();
-			await searchInput.type('Lviv');
+			// Search input -----------------------------
+			// const searchInput = await page.$('input[name="ss"]');
+			// await searchInput.focus();
+			// await searchInput.type('Lviv');
 
-			// Search btn
-			await page.evaluate(() => {
-				const btn = document.querySelector('button[type="submit"]');
-				btn.click();
-			});
+			// Search btn------------------------------------------
+			// await page.evaluate(() => {
+			// 	const btn = document.querySelector('button[type="submit"]');
+			// 	btn.click();
+			// });
 
-			await page.waitForNavigation({ waitUntil: 'networkidle2' });
-			// test HTML output
+			// await page.waitForNavigation({ waitUntil: 'networkidle2' });
+			// test HTML output ---------------------------------------------
 			const pageSource = await page.content();
 			// fs.writeFileSync('pageSource.html', pageSource, 'utf8');
 			// console.log('Page source saved to pageSource.html');

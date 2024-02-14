@@ -23,7 +23,7 @@ const scrapeLogic = async (res) => {
 	try {
 		const page = await browser.newPage();
 
-		await page.goto(url);
+		await page.goto(url, { waitUntil: 'networkidle2' });
 
 		// Set screen size
 		await page.setViewport({ width: 1080, height: 1024 });
@@ -54,7 +54,6 @@ const scrapeLogic = async (res) => {
 			const pageSource = await page.content();
 			// fs.writeFileSync('pageSource.html', pageSource, 'utf8');
 			// console.log('Page source saved to pageSource.html');
-			console.log(pageSource);
 
 			const info = await page.$eval(
 				'div.bui-f-font-display_two.sr-snippet_header_num_properties',
@@ -64,7 +63,7 @@ const scrapeLogic = async (res) => {
 
 			await browser.close();
 
-			res.send(info);
+			res.send(pageSource);
 		}, 3000);
 	} catch (e) {
 		console.error(e);

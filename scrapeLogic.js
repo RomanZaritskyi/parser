@@ -39,37 +39,37 @@ const scrapeLogic = async (res) => {
 		// }
 
 		// -----------Search input -----------------------------
-		const searchInput = await page.$('input.eb46370fe1');
-		await searchInput.focus();
-		await searchInput.type('Lviv');
+		const searchInputSelector = 'input.eb46370fe1';
+		await pabe.type(searchInputSelector, 'Lviv');
 
 		// -----------Select dates ---------------------------------------
 		const dateContainerSelector = 'div.f73e6603bf';
-		await page.waitForSelector(dateContainerSelector);
+		await page.waitForSelector(dateContainerSelector, { timeout: 60000 });
 		await page.click(dateContainerSelector);
 
 		// -----------Checkin date--------------------------------
 		const dateSelector = 'span[data-date="2024-02-16"]';
-		await page.waitForSelector(dateSelector);
+		await page.waitForSelector(dateSelector, { timeout: 60000 });
 		await page.click(dateSelector);
 
 		// ----------Checkout date------------------
 		const dateSelector2 = 'span[data-date="2024-02-20"]';
-		await page.waitForSelector(dateSelector2);
+		await page.waitForSelector(dateSelector2, { timeout: 60000 });
 		await page.click(dateSelector2);
-		// ---------------Search btn------------------------------------------
-		const submitButtoSelector =
-			'button.a83ed08757.c21c56c305.a4c1805887.f671049264.d2529514af.c082d89982.cceeb8986b';
-		await page.waitForSelector(submitButtoSelector);
-		await page.click(submitButtoSelector);
 
-		await page.waitForNavigation({ waitUntil: 'networkidle2' });
+		// ---------------Search btn------------------------------------------
+		// const submitButtoSelector =
+		// 	'button.a83ed08757.c21c56c305.a4c1805887.f671049264.d2529514af.c082d89982.cceeb8986b';
+		// await page.waitForSelector(submitButtoSelector);
+		// await page.click(submitButtoSelector);
+
+		// await page.waitForNavigation({ waitUntil: 'networkidle2' });
 
 		// --------------Get places-----------------------------------------------
-		const palcesSelector = await page.waitForSelector('div.ac864a506a');
-		const amounOfPlaces = await palcesSelector?.evaluate(
-			(el) => el.textContent
-		);
+		// const palcesSelector = await page.waitForSelector('div.ac864a506a');
+		// const amounOfPlaces = await palcesSelector?.evaluate(
+		// 	(el) => el.textContent
+		// );
 
 		// test HTML output ---------------------------------------------
 		const pageSource = await page.content();

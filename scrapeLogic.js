@@ -7,7 +7,6 @@ const url = 'https://booking.com';
 
 const scrapeLogic = async (res, city) => {
 	const browser = await puppeteer.launch({
-		headless: false,
 		args: [
 			'--disable-setuid-sandbox',
 			'--no-sandbox',

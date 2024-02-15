@@ -24,12 +24,14 @@ const scrapeLogic = async (res, city) => {
 
 		// interceptors
 		page.on('request', (req) => {
-			console.log('Request', req);
+			if (req.url().endsWith('.png') || req.url().endsWith('.jpg')) {
+				req.abort();
+			} else req.continue();
 		});
 
-		page.on('response', (res) => {
-			console.log('Response', res);
-		});
+		// page.on('response', (res) => {
+		// 	console.log('Response', res);
+		// });
 
 		await page.goto(url);
 
@@ -41,14 +43,14 @@ const scrapeLogic = async (res, city) => {
 		await page.type(searchInputSelector, `${city}`);
 
 		// -----------Select dates ---------------------------------------
-		const dateContainerSelector = 'div.f73e6603bf';
-		await page.waitForSelector(dateContainerSelector);
-		await page.click(dateContainerSelector);
+		// const dateContainerSelector = 'div.f73e6603bf';
+		// await page.waitForSelector(dateContainerSelector);
+		// await page.click(dateContainerSelector);
 
 		// -----------Checkin date--------------------------------
-		const dateSelector = 'span[data-date="2024-02-16"]';
-		await page.waitForSelector(dateSelector);
-		await page.click(dateSelector);
+		// const dateSelector = 'span[data-date="2024-02-16"]';
+		// await page.waitForSelector(dateSelector);
+		// await page.click(dateSelector);
 
 		// ----------Checkout date------------------
 		// const dateSelector2 = 'span[data-date="2024-02-28]';

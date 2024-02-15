@@ -34,7 +34,7 @@ const scrapeLogic = async (res, city) => {
 		// 	}
 		// });
 
-		await page.goto(url, { waitUntil: 'domcontentloaded' });
+		await page.goto(url, { waitUntil: 'domcontentloaded', timeout: 10000 });
 
 		// ----------- Set screen size
 		await page.setViewport({ width: 1080, height: 1024 });
@@ -42,7 +42,7 @@ const scrapeLogic = async (res, city) => {
 		// close popup if it exist
 		const poputSelector = 'div.c0528ecc22';
 		const closePopupSelector = 'button[aria-label="Dismiss sign-in info."]';
-		const popup = await page.waitForSelector(poputSelector, { timeout: 3000 });
+		const popup = await page.waitForSelector(poputSelector, { timeout: 5000 });
 
 		if (popup) {
 			console.log('need to close');

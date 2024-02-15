@@ -4,9 +4,7 @@ const fs = require('fs');
 
 const url = 'https://booking.com';
 
-const cities = ['Paris', 'London', 'Lviv'];
-
-const scrapeLogic = async (res) => {
+const scrapeLogic = async (res, city) => {
 	const browser = await puppeteer.launch({
 		args: [
 			'--disable-setuid-sandbox',
@@ -30,7 +28,7 @@ const scrapeLogic = async (res) => {
 
 		// -----------Search input -----------------------------
 		const searchInputSelector = 'input.eb46370fe1';
-		await page.type(searchInputSelector, 'Lviv');
+		await page.type(searchInputSelector, `${city}`);
 
 		// -----------Select dates ---------------------------------------
 		const dateContainerSelector = 'div.f73e6603bf';
@@ -57,23 +55,24 @@ const scrapeLogic = async (res) => {
 		await page.waitForNavigation({ waitUntil: 'networkidle2' });
 
 		// --------------Get places-----------------------------------------------
-		// const palcesSelector = await page.waitForSelector('div.ac864a506a');
-		// const amounOfPlaces = await palcesSelector?.evaluate(
-		// 	(el) => el.textContent
-		// );
+		const palcesSelector = await page.waitForSelector('div.ac864a506a');
+		const amounOfPlaces = await palcesSelector?.evaluate(
+			(el) => el.textContent
+		);
 
 		// test HTML output ---------------------------------------------
-		const pageSource = await page.content();
+		// const pageSource = await page.content();
 		// fs.writeFileSync('pageSource.html', pageSource, 'utf8');
 		// console.log('Page source saved to pageSource.html');
-		console.log('lalala');
 
 		await browser.close();
 
-		res.send(pageSource);
+		// res.send(pageSource);
+		return amounOfPlaces;
 	} catch (e) {
 		console.error(e);
-		res.send(`Something went wrong while running Puppeteer: ${e}`);
+		// res.send(`Something went wrong while running Puppeteer: ${e}`);
+		return `Something went wrong while running Puppeteer: ${e}`;
 	}
 };
 

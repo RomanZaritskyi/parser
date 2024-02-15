@@ -1,5 +1,6 @@
 const puppeteer = require('puppeteer');
 const { searchAndExtractData } = require('./searchEndExtractData.js');
+const { delay } = require('./helpers/delay.js');
 require('dotenv').config();
 
 const url = 'https://booking.com';

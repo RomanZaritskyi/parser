@@ -7,11 +7,13 @@ const PORT = process.env.PORT || 4000;
 app.get('/scrape', async (req, res) => {
 	const cities = ['Paris'];
 	const placesInfo = [];
+
 	for (const city of cities) {
 		const info = await scrapeLogic(res, city);
 		placesInfo.push(info);
 	}
-	res.send(`<ul>${placesInfo.map((item) => `<li>${item}</li>`)}</ul>`);
+
+	res.send(placesInfo[0]);
 });
 
 app.get('/', (req, res) => {

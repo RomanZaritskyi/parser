@@ -26,12 +26,12 @@ const scrapeLogic = async (res, city) => {
 		page.on('request', (req) => {
 			if (req.url().endsWith('.png') || req.url().endsWith('.jpg')) {
 				req.abort();
-			} else req.continue();
+			} else if (req.resourceType() === 'image') {
+				req.abort();
+			} else {
+				req.continue();
+			}
 		});
-
-		// page.on('response', (res) => {
-		// 	console.log('Response', res);
-		// });
 
 		await page.goto(url);
 

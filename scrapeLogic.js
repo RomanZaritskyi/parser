@@ -59,6 +59,10 @@ const scrapeLogic = async (res) => {
 		// ---------------Search btn------------------------------------------
 		await page.waitForSelector(submitButtoSelector);
 		await page.click(submitButtoSelector);
+
+		// --------------Wait for navigation -------------------
+		await page.waitForNavigation({ waitUntil: 'networkidle2' });
+
 		// --------------Get places-----------------------------------------------
 		// const palcesSelector = await page.waitForSelector('div.ac864a506a');
 		// const amounOfPlaces = await palcesSelector?.evaluate(
@@ -69,6 +73,7 @@ const scrapeLogic = async (res) => {
 		const pageSource = await page.content();
 		// fs.writeFileSync('pageSource.html', pageSource, 'utf8');
 		// console.log('Page source saved to pageSource.html');
+		console.log('lalala');
 
 		await browser.close();
 

@@ -1,12 +1,13 @@
 const puppeteer = require('puppeteer');
 const { searchAndExtractData } = require('./searchEndExtractData.js');
-const { delay } = require('./helpers/delay.js');
+
 require('dotenv').config();
 
 const url = 'https://booking.com';
 
 const scrapeLogic = async (res, city) => {
 	const browser = await puppeteer.launch({
+		headless: false,
 		args: [
 			'--disable-setuid-sandbox',
 			'--no-sandbox',
@@ -21,6 +22,11 @@ const scrapeLogic = async (res, city) => {
 
 	try {
 		const page = await browser.newPage();
+		await page.setViewport({ width: 1080, height: 1024 });
+		await page.setGeolocation({
+			latitude: 50.4501,
+			longitude: 30.5234,
+		});
 
 		// await page.setRequestInterception(true);
 
@@ -35,10 +41,9 @@ const scrapeLogic = async (res, city) => {
 		// 	}
 		// });
 
-		await page.goto(url, { waitUntil: 'domcontentloaded', timeout: 10000 });
+		await page.goto(url, { waitUntil: 'domcontentloaded' });
 
 		// ----------- Set screen size
-		await page.setViewport({ width: 1080, height: 1024 });
 
 		// close popup if it exist
 		const poputSelector = 'div.c0528ecc22';
@@ -51,11 +56,12 @@ const scrapeLogic = async (res, city) => {
 			await closePopupBtn.click();
 			const pageSource = await searchAndExtractData(page, city);
 			return pageSource;
-		} else {
-			console.log('there is no popup');
-			const pageSource = await searchAndExtractData(page, city);
-			return pageSource;
 		}
+		// else {
+		// console.log('there is no popup');
+		// 	const pageSource = await searchAndExtractData(page, city);
+		// 	return pageSource;
+		// }
 	} catch (e) {
 		console.error(e);
 		return `Something went wrong while running Puppeteer: ${e}`;

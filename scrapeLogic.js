@@ -1,6 +1,5 @@
 const puppeteer = require('puppeteer');
 require('dotenv').config();
-const fs = require('fs');
 
 const url = 'https://booking.com';
 
@@ -31,19 +30,19 @@ const scrapeLogic = async (res, city) => {
 		await page.type(searchInputSelector, `${city}`);
 
 		// -----------Select dates ---------------------------------------
-		const dateContainerSelector = 'div.f73e6603bf';
-		await page.waitForSelector(dateContainerSelector);
-		await page.click(dateContainerSelector);
+		// const dateContainerSelector = 'div.f73e6603bf';
+		// await page.waitForSelector(dateContainerSelector);
+		// await page.click(dateContainerSelector);
 
 		// -----------Checkin date--------------------------------
-		const dateSelector = 'span[data-date="2024-02-16"]';
-		await page.waitForSelector(dateSelector);
-		await page.click(dateSelector);
+		// const dateSelector = 'span[data-date="2024-02-16"]';
+		// await page.waitForSelector(dateSelector);
+		// await page.click(dateSelector);
 
 		// ----------Checkout date------------------
-		const dateSelector2 = 'span[data-date="2024-02-28]';
-		await page.waitForSelector(dateSelector2);
-		await page.click(dateSelector2);
+		// const dateSelector2 = 'span[data-date="2024-02-28]';
+		// await page.waitForSelector(dateSelector2);
+		// await page.click(dateSelector2);
 
 		// ---------------Search btn------------------------------------------
 		const submitButtoSelector =
@@ -61,18 +60,14 @@ const scrapeLogic = async (res, city) => {
 		);
 
 		// test HTML output ---------------------------------------------
-		// const pageSource = await page.content();
-		// fs.writeFileSync('pageSource.html', pageSource, 'utf8');
-		// console.log('Page source saved to pageSource.html');
-
-		await browser.close();
-
-		// res.send(pageSource);
-		return amounOfPlaces;
+		const pageSource = await page.content();
+		return pageSource;
 	} catch (e) {
 		console.error(e);
 		// res.send(`Something went wrong while running Puppeteer: ${e}`);
 		return `Something went wrong while running Puppeteer: ${e}`;
+	} finally {
+		await browser.close();
 	}
 };
 

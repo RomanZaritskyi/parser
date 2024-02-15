@@ -20,6 +20,14 @@ const scrapeLogic = async (res, city) => {
 	try {
 		const page = await browser.newPage();
 
+		page.on('request', (req) => {
+			console.log(req);
+		});
+
+		page.on('response', (res) => {
+			console.log(res);
+		});
+
 		await page.goto(url);
 
 		// ----------- Set screen size
@@ -45,19 +53,19 @@ const scrapeLogic = async (res, city) => {
 		// await page.click(dateSelector2);
 
 		// ---------------Search btn------------------------------------------
-		const submitButtoSelector =
-			'button.a83ed08757.c21c56c305.a4c1805887.f671049264.d2529514af.c082d89982.cceeb8986b';
-		await page.waitForSelector(submitButtoSelector);
-		await page.click(submitButtoSelector);
+		// const submitButtoSelector =
+		// 	'button.a83ed08757.c21c56c305.a4c1805887.f671049264.d2529514af.c082d89982.cceeb8986b';
+		// await page.waitForSelector(submitButtoSelector);
+		// await page.click(submitButtoSelector);
 
 		// --------------Wait for navigation -------------------
-		await page.waitForNavigation({ waitUntil: 'networkidle2' });
+		// await page.waitForNavigation({ waitUntil: 'networkidle2' });
 
 		// --------------Get places-----------------------------------------------
-		const palcesSelector = await page.waitForSelector('div.ac864a506a');
-		const amounOfPlaces = await palcesSelector?.evaluate(
-			(el) => el.textContent
-		);
+		// const palcesSelector = await page.waitForSelector('div.ac864a506a');
+		// const amounOfPlaces = await palcesSelector?.evaluate(
+		// 	(el) => el.textContent
+		// );
 
 		// test HTML output ---------------------------------------------
 		const pageSource = await page.content();

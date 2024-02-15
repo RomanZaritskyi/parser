@@ -7,7 +7,7 @@ const PORT = process.env.PORT || 4000;
 app.get('/scrape', async (req, res) => {
 	const cities = ['Paris'];
 	const placesInfo = [];
-	for (const city in cities) {
+	for (const city of cities) {
 		const info = await scrapeLogic(res, city);
 		placesInfo.push(info);
 	}

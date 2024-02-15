@@ -20,12 +20,15 @@ const scrapeLogic = async (res, city) => {
 	try {
 		const page = await browser.newPage();
 
+		await page.setRequestInterception(true);
+
+		// interceptors
 		page.on('request', (req) => {
-			console.log(req);
+			console.log('Request', req);
 		});
 
 		page.on('response', (res) => {
-			console.log(res);
+			console.log('Response', res);
 		});
 
 		await page.goto(url);
@@ -38,14 +41,14 @@ const scrapeLogic = async (res, city) => {
 		await page.type(searchInputSelector, `${city}`);
 
 		// -----------Select dates ---------------------------------------
-		// const dateContainerSelector = 'div.f73e6603bf';
-		// await page.waitForSelector(dateContainerSelector);
-		// await page.click(dateContainerSelector);
+		const dateContainerSelector = 'div.f73e6603bf';
+		await page.waitForSelector(dateContainerSelector);
+		await page.click(dateContainerSelector);
 
 		// -----------Checkin date--------------------------------
-		// const dateSelector = 'span[data-date="2024-02-16"]';
-		// await page.waitForSelector(dateSelector);
-		// await page.click(dateSelector);
+		const dateSelector = 'span[data-date="2024-02-16"]';
+		await page.waitForSelector(dateSelector);
+		await page.click(dateSelector);
 
 		// ----------Checkout date------------------
 		// const dateSelector2 = 'span[data-date="2024-02-28]';

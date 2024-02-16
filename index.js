@@ -1,6 +1,7 @@
 const express = require('express');
 const { scrapeLogic } = require('./scrapeLogic');
 const { getInfo } = require('./test.js');
+const { getProxies } = require('./getProxies.js');
 const app = express();
 
 const PORT = process.env.PORT || 4000;
@@ -30,6 +31,11 @@ app.get('/test', async (req, res) => {
 	<ol>
 		${placesInfo.map((item) => `<li>${item}</li>`)}
 	</ol>`);
+});
+
+app.get('/proxies', async (req, res) => {
+	const proxies = await getProxies();
+	res.json({ proxies });
 });
 
 app.get('/', (req, res) => {

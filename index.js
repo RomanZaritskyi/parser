@@ -1,47 +1,82 @@
 const express = require('express');
-const { scrapeLogic } = require('./scrapeLogic');
-const { getInfo } = require('./zenRows.js');
-const { getProxies } = require('./getProxies.js');
+const bodyParser = require('body-parser');
+const path = require('path');
+const session = require('express-session'); // Add this line
 const app = express();
+const { getInfo } = require('./zenRows.js');
 
 const PORT = process.env.PORT || 4000;
 
-app.get('/scrape', async (req, res) => {
-	const cities = ['Paris'];
-	const placesInfo = [];
+// Middleware to parse incoming request bodies
+app.use(bodyParser.urlencoded({ extended: true }));
 
-	for (const city of cities) {
-		const info = await scrapeLogic(res, city);
+// Set EJS as the view engine
+app.set('view engine', 'ejs');
+app.set('views', path.join(__dirname, 'views'));
+
+// Serve static files from the 'public' directory
+app.use(express.static(path.join(__dirname, 'public')));
+
+// Use express-session middleware
+app.use(
+	session({
+		secret: 'secret', // Change this to a secret key
+		resave: false,
+		saveUninitialized: true,
+	})
+);
+
+// Handle POST request to /places
+app.post('/places', async (req, res) => {
+	const { places, startDate, endDate } = req.body;
+	const parsedPlaces = places.split(', ').map((city) => ({
+		city,
+		startDate,
+		endDate,
+	}));
+
+	const placesInfo = [];
+	for (const place of parsedPlaces) {
+		const info = await getInfo(place);
 		placesInfo.push(info);
 	}
+	console.log(places, startDate, endDate);
 
-	res.send(placesInfo[0]);
+	// Render the places template and pass the 'info' array to it
+	res.render('places', { placesInfo });
 });
 
-app.get('/test', async (req, res) => {
-	const cities = ['Paris', 'Lviv', 'London'];
-	const placesInfo = [];
-
-	for (const city of cities) {
-		const info = await getInfo(city);
-		placesInfo.push(info);
+// Handle login logic
+app.post('/login', (req, res) => {
+	const { username, password } = req.body;
+	console.log(username);
+	// Validate the username and password (e.g., against a database)
+	if (username === 'admin' && password === 'admin') {
+		// If valid, set a session or JWT to keep the user logged in
+		req.session.user = username; // Example of setting a session
+		res.redirect('/');
+	} else {
+		res.status(401).send('Invalid username or password');
 	}
-
-	res.send(`
-	<ol>
-		${placesInfo.map((item) => `<li>${item}</li>`)}
-	</ol>`);
 });
 
-app.get('/proxies', async (req, res) => {
-	const proxies = await getProxies();
-	res.json({ proxies });
+app.get('/auth', (req, res) => {
+	res.sendFile(path.join(__dirname, 'templates', 'login.html'));
 });
 
+// Serve the form from the 'templates' folder
 app.get('/', (req, res) => {
-	res.send('Render Puppeteer server is up and running!');
+	// Check if the user is logged in
+	if (req.session?.user) {
+		// Render the main page with the second form
+		res.sendFile(path.join(__dirname, 'templates', 'form.html'));
+	} else {
+		// Redirect to the login page if not logged in
+		res.redirect('/auth');
+	}
 });
 
+// Start the server
 app.listen(PORT, () => {
-	console.log(`Listening on port ${PORT}`);
+	console.log(`Server is running on port ${PORT}`);
 });

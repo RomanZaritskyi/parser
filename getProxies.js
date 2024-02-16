@@ -3,7 +3,7 @@ const cheerio = require('cheerio');
 const fs = require('fs');
 
 async function getProxies() {
-	const url = `https://free-proxy-list.net/`;
+	const url = `https://www.us-proxy.org/`;
 	const proxiesArray = [];
 
 	try {
@@ -18,16 +18,15 @@ async function getProxies() {
 			const host = $(element).find('td:nth(0)').text();
 			const port = $(element).find('td:nth(1)').text();
 
-			// const proxy = `https://${ip}:${port}`;
 			const proxy = {
-				protocol: 'https',
+				protocol: 'http',
 				host,
 				port,
 			};
 			proxiesArray.push(proxy);
 		});
 
-		// console.log(proxiesArray);
+		console.log(proxiesArray);
 		return proxiesArray;
 	} catch (error) {
 		console.error(error.message);

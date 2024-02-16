@@ -15,14 +15,19 @@ async function getProxies() {
 		const tableBodyRow = table.find('tbody tr');
 
 		tableBodyRow.each((index, element) => {
-			const ip = $(element).find('td:nth(0)').text();
+			const host = $(element).find('td:nth(0)').text();
 			const port = $(element).find('td:nth(1)').text();
 
-			const proxy = `https://${ip}:${port}`;
+			// const proxy = `https://${ip}:${port}`;
+			const proxy = {
+				protocol: 'https',
+				host,
+				port,
+			};
 			proxiesArray.push(proxy);
 		});
 
-		console.log(proxiesArray);
+		// console.log(proxiesArray);
 		return proxiesArray;
 	} catch (error) {
 		console.error(error.message);
@@ -32,6 +37,6 @@ async function getProxies() {
 	}
 }
 
-// getProxies();
+getProxies();
 
 module.exports = { getProxies };

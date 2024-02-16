@@ -7,7 +7,7 @@ const app = express();
 const PORT = process.env.PORT || 4000;
 
 app.get('/scrape', async (req, res) => {
-	const cities = ['Paris', 'Lviv', 'London'];
+	const cities = ['Paris'];
 	const placesInfo = [];
 
 	for (const city of cities) {

@@ -1,6 +1,6 @@
 const express = require('express');
 const { scrapeLogic } = require('./scrapeLogic');
-const { getInfo } = require('./test.js');
+const { getInfo } = require('./zenRows.js');
 const { getProxies } = require('./getProxies.js');
 const app = express();
 

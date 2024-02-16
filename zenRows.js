@@ -3,10 +3,6 @@ const cheerio = require('cheerio');
 const axios = require('axios');
 const { getProxies } = require('./getProxies.js');
 
-const axiosInstance = axios.create({
-	timeout: 1000,
-});
-
 async function getInfo(city) {
 	// const client = new ZenRows('8aa2016c941dcc2901c98f466fff233cb6d97dc5');
 	const url = `https://www.booking.com/searchresults.html?ss=${city}&checkin=2024-02-16&checkout=2024-02-29`;
@@ -17,7 +13,7 @@ async function getInfo(city) {
 			Math.floor(Math.random() * proxies.length)
 		];
 
-		const { data } = await axiosInstance.get(url, {
+		const { data } = await axios.get(url, {
 			proxy: randomProxy,
 		});
 

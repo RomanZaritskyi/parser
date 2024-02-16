@@ -3,7 +3,7 @@ const cheerio = require('cheerio');
 
 async function getInfo(city) {
 	const client = new ZenRows('8aa2016c941dcc2901c98f466fff233cb6d97dc5');
-	const url = `https://www.booking.com/searchresults.html?ss=${city}`;
+	const url = `https://www.booking.com/searchresults.html?ss=${city}&checkin=2024-02-16&checkout=2024-02-29`;
 
 	try {
 		const { data } = await client.get(url, {

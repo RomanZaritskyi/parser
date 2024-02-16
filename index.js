@@ -18,8 +18,18 @@ app.get('/scrape', async (req, res) => {
 });
 
 app.get('/test', async (req, res) => {
-	const info = await getInfo();
-	res.send(`<h1>${info}</h1>`);
+	const cities = ['Paris', 'Lviv', 'London'];
+	const placesInfo = [];
+
+	for (const city of cities) {
+		const info = await getInfo(city);
+		placesInfo.push(info);
+	}
+
+	res.send(`
+	<ol>
+		${placesInfo.map((item) => `<li>${item}</li>`)}
+	</ol>`);
 });
 
 app.get('/', (req, res) => {

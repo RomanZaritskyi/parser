@@ -17,8 +17,8 @@ app.get('/scrape', async (req, res) => {
 	res.send(placesInfo[0]);
 });
 
-app.get('/test', (req, res) => {
-	const info = getInfo();
+app.get('/test', async (req, res) => {
+	const info = await getInfo();
 	res.send(`<h1>${info}</h1>`);
 });
 

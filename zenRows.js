@@ -2,7 +2,7 @@ const { ZenRows } = require('zenrows');
 const cheerio = require('cheerio');
 
 async function getInfo(place) {
-	const client = new ZenRows('8aa2016c941dcc2901c98f466fff233cb6d97dc5');
+	const client = new ZenRows('607e809eb2f96d02b07e045f8203cb5862e256ed');
 	const url = `https://www.booking.com/searchresults.html?ss=${place.city}&checkin=${place.startDate}&checkout=${place.endDate}`;
 
 	try {
